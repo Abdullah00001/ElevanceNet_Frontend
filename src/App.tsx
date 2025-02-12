@@ -1,9 +1,14 @@
+import { RouterProvider } from "react-router-dom";
 import "./App.css";
+import Routes from "./routes/Router";
+import { HelmetProvider } from "react-helmet-async";
 
 function App() {
   return (
     <>
-      <h1 className="text-6xl">Hello World</h1>
+      <HelmetProvider>
+        <RouterProvider router={Routes}></RouterProvider>
+      </HelmetProvider>
     </>
   );
 }
