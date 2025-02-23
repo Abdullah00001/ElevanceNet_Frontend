@@ -1,56 +1,50 @@
-# ElevanceNet Frontend
+# React + TypeScript + Vite
 
-## Project Overview
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-ElevanceNet is a professional social networking platform that helps users stay focused and productive by showing content strictly aligned with their preferences.
+Currently, two official plugins are available:
 
-## Features
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-- **User Authentication**: Signup, login, and email verification.
-- **User Profile Management**: Manage education, work, social links, and profile details.
-- **Content Feed**: A preference-based content feed.
-- **Post Interaction**: Create, update, delete posts, like/unlike, comment.
-- **Search**: Search posts and users.
-- **Account Management**: Account deletion.
+## Expanding the ESLint configuration
 
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-## Setup and Installation
+- Configure the top-level `parserOptions` property like this:
 
-### With Docker
+```js
+export default tseslint.config({
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/elevancenet.git
-    ```
-2. Navigate to the project directory:
-    ```
-    cd elevancenet
-    ```
-3. Build the Docker image:
-    ```
-    docker build -t elevancenet .
-    ```
-4. Run the Docker container:
-    ```
-    docker run -p 5173:5173 elevancenet
-    ```
-4. Access the application at http://localhost:3000.
+- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
+- Optionally add `...tseslint.configs.stylisticTypeChecked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-## 🚀 Deployment
+```js
+// eslint.config.js
+import react from 'eslint-plugin-react'
 
-The backend is hosted on Vercel for production. The CI/CD pipeline automatically pushes updates to Docker Hub.
-
-## 🛠️ Contribution Guidelines
-
-This project is currently not open for external contributions. However, feel free to check the code and suggest improvements via issues.
-
-## 📄 License
-
-This project is licensed under the MIT License. See the LICENSE file for more details.
-
-## 📞 Contact
-
-For any issues or inquiries, feel free to reach out to us at:  
-[support@elevancenet.com](mailto:support@elevancenet.com)
-
-Your contributions are highly appreciated! 🚀
+export default tseslint.config({
+  // Set the react version
+  settings: { react: { version: '18.3' } },
+  plugins: {
+    // Add the react plugin
+    react,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended rules
+    ...react.configs.recommended.rules,
+    ...react.configs['jsx-runtime'].rules,
+  },
+})
+```
