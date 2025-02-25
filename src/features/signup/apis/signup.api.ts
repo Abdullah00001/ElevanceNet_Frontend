@@ -15,7 +15,7 @@ const signup = async (
   } catch (error) {
     if (error instanceof Error) {
       if (axios.isAxiosError(error) && error.response) {
-        return error.response.data;
+        throw error.response.data.message;
       }
     }
   }

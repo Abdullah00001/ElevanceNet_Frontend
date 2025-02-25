@@ -1,4 +1,4 @@
-import { FC, FormEvent, useState } from "react";
+import { FC, FormEvent, useCallback, useEffect, useState } from "react";
 import FirstName from "./FirstName";
 import LastName from "./LastName";
 import Email from "./Email";
@@ -10,12 +10,13 @@ import signupInputValidationSchema from "../../../schemas/signup.schema";
 import useFieldError from "../hooks/useFieldError";
 import useSignup from "../hooks/useSignup";
 import { useNavigate } from "react-router-dom";
+import { HashLoader } from "react-spinners";
 
 const SignupForm: FC = () => {
   const { signupPayload } = useSignupPayload();
-  const [isValid, setIsValid] = useState<boolean>(false);
   const { setFieldError, resetFieldErrors } = useFieldError();
-  const { isPending, mutate, isError, isSuccess } = useSignup();
+  const [signupFailedError, setSignupFailedError] = useState<string>("yjtytc");
+  const { isPending, mutate } = useSignup();
   const navigate = useNavigate();
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -23,9 +24,7 @@ const SignupForm: FC = () => {
     resetFieldErrors();
     const fieldValidationResult =
       signupInputValidationSchema.safeParse(signupPayload);
-    if (fieldValidationResult.success) {
-      setIsValid(true);
-    } else {
+    if (!fieldValidationResult.success) {
       const formatErrors = fieldValidationResult.error.format();
       Object.entries(formatErrors)
         .filter(([key]) => key !== "_errors")
@@ -38,17 +37,23 @@ const SignupForm: FC = () => {
           }
           setFieldError(field, message);
         });
+      return;
     }
     // Form Validation
-    if (isValid) {
-      mutate(signupPayload);
-    }
-    if (isSuccess) {
-      navigate("/auth/verify");
-    }
+    mutate(signupPayload, {
+      onSuccess: (data) => {
+        if (data?.success) {
+          navigate("/auth/verify");
+        }
+      },
+      onError: (error) => setSignupFailedError(error.message),
+    });
   };
+  useEffect(() => {
+    console.log(signupFailedError);
+  }, []);
   return (
-    <section className="mt-10 w-full max-w-md px-4 md:px-0">
+    <section className="mt-10 w-full max-w-md px-4 md:px-0 relative">
       <form className="w-full space-y-2" onSubmit={handleSubmit}>
         <div className="flex w-full flex-col gap-2 md:flex-row md:items-center md:gap-5">
           <FirstName />
@@ -64,15 +69,38 @@ const SignupForm: FC = () => {
           <ConfirmPassword />
         </div>
         <Button
-          style="mt-2 w-full rounded-lg bg-[#1D9BF0] py-3 text-lg font-bold text-white cursor-pointer"
+          style="mt-2 hover:opacity-90 w-full rounded-lg bg-[#1D9BF0] py-3 text-lg font-bold text-white cursor-pointer"
           type="submit"
         >
-          Signup
+          {isPending ? <HashLoader size={20} /> : "Signup"}
         </Button>
         <h5 className="text-center text-sm text-gray-600">
-          Already have an account?
+          Already have an account?{" "}
+          <span
+            className="text-[#1D9BF0] font-bold md:text-[18px] cursor-pointer"
+            onClick={useCallback(() => {
+              navigate("/");
+            }, [])}
+          >
+            Login
+          </span>
         </h5>
       </form>
+      {/* Error Modal */}
+      {signupFailedError && (
+        <div className="absolute z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
+            <h2 className="text-lg font-bold text-red-600">Signup Failed</h2>
+            <p className="text-gray-700 mt-2">{signupFailedError}</p>
+            <button
+              className="mt-4 bg-[#1D9BF0] text-white py-2 px-4 rounded-lg"
+              onClick={() => setSignupFailedError("")}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 };
