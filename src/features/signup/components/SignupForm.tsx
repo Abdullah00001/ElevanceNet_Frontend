@@ -1,4 +1,4 @@
-import { FC, FormEvent, useEffect, useState } from "react";
+import { FC, FormEvent, useState } from "react";
 import FirstName from "./FirstName";
 import LastName from "./LastName";
 import Email from "./Email";
@@ -8,13 +8,18 @@ import ConfirmPassword from "./ConfirmPassword";
 import useSignupPayload from "../hooks/useSignupPayload";
 import signupInputValidationSchema from "../../../schemas/signup.schema";
 import useFieldError from "../hooks/useFieldError";
+import useSignup from "../hooks/useSignup";
+import { useNavigate } from "react-router-dom";
 
 const SignupForm: FC = () => {
   const { signupPayload } = useSignupPayload();
   const [isValid, setIsValid] = useState<boolean>(false);
   const { setFieldError, resetFieldErrors } = useFieldError();
+  const { isPending, mutate, isError, isSuccess } = useSignup();
+  const navigate = useNavigate();
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    // Form Validation
     resetFieldErrors();
     const fieldValidationResult =
       signupInputValidationSchema.safeParse(signupPayload);
@@ -34,8 +39,12 @@ const SignupForm: FC = () => {
           setFieldError(field, message);
         });
     }
+    // Form Validation
     if (isValid) {
-      console.log(signupPayload);
+      mutate(signupPayload);
+    }
+    if (isSuccess) {
+      navigate("/auth/verify");
     }
   };
   return (
