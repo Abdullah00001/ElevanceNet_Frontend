@@ -3,11 +3,11 @@ import FieldErrorContext from "../contexts/fieldError.context";
 import IProviderProps from "../../../interfaces/providerProps.interface";
 
 const FieldErrorProvider: FC<IProviderProps> = ({ children }) => {
-  const [firstNameError, setFirstNameError] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [firstNameError, setFirstNameError] = useState("sert");
+  const [lastNameError, setLastNameError] = useState("set");
+  const [emailError, setEmailError] = useState("sert");
+  const [passwordError, setPasswordError] = useState("str");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("sert");
   return (
     <>
       <FieldErrorContext.Provider

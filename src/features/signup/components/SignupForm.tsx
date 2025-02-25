@@ -8,33 +8,32 @@ import ConfirmPassword from "./ConfirmPassword";
 
 const SignupForm: FC = () => {
   return (
-    <>
-      <section className=" mt-[2.5rem]">
-        <form className="w-full">
-          <div className="flex items-center justify-center gap-5">
-            <FirstName />
-            <LastName />
-          </div>
-
-          <div className="flex items-center justify-center mt-1">
-            <Email />
-          </div>
-          <div className="flex items-center justify-center mt-1">
-            <Password />
-          </div>
-          <div className="flex items-center justify-center mt-1">
-            <ConfirmPassword />
-          </div>
-          <Button
-            style={`text-center mt-[.5rem] rounded-[.5rem] text-[1.1rem] font-bold w-full bg-[#1D9BF0] cursor-pointer py-[.8rem]`}
-            type={"submit"}
-          >
-            Signup
-          </Button>
-          <h5 className="mt-3">Already have an account?</h5>
-        </form>
-      </section>
-    </>
+    <section className="mt-10 w-full max-w-md px-4 md:px-0">
+      <form className="w-full space-y-4">
+        <div className="flex flex-col gap-2 md:flex-row md:gap-5">
+          <FirstName />
+          <LastName />
+        </div>
+        <div>
+          <Email />
+        </div>
+        <div>
+          <Password />
+        </div>
+        <div>
+          <ConfirmPassword />
+        </div>
+        <Button
+          style="mt-2 w-full rounded-lg bg-[#1D9BF0] py-3 text-lg font-bold text-white cursor-pointer"
+          type="submit"
+        >
+          Signup
+        </Button>
+        <h5 className="text-center text-sm text-gray-600">
+          Already have an account?
+        </h5>
+      </form>
+    </section>
   );
 };
 
