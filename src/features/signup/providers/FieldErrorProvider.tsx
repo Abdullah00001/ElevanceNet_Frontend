@@ -1,27 +1,44 @@
 import { FC, useState } from "react";
 import FieldErrorContext from "../contexts/fieldError.context";
 import IProviderProps from "../../../interfaces/providerProps.interface";
+import { IFieldError } from "../interfaces/fieldErrorContext.interface";
 
 const FieldErrorProvider: FC<IProviderProps> = ({ children }) => {
-  const [firstNameError, setFirstNameError] = useState("sert");
-  const [lastNameError, setLastNameError] = useState("set");
-  const [emailError, setEmailError] = useState("sert");
-  const [passwordError, setPasswordError] = useState("str");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("sert");
+  const [fieldErrors, setFieldErrors] = useState<IFieldError>({
+    firstNameError: "",
+    lastNameError: "",
+    emailError: "",
+    passwordError: "",
+    confirmPasswordError: "",
+  });
+  const setFieldError = (field: string, errorMessage: string) => {
+    if (field === "firstName") {
+      setFieldErrors((prev) => ({ ...prev, firstNameError: errorMessage }));
+    } else if (field === "lastName") {
+      setFieldErrors((prev) => ({ ...prev, lastNameError: errorMessage }));
+    } else if (field === "email") {
+      setFieldErrors((prev) => ({ ...prev, emailError: errorMessage }));
+    } else if (field === "password") {
+      setFieldErrors((prev) => ({ ...prev, passwordError: errorMessage }));
+    }
+  };
+  const resetFieldErrors = () => {
+    setFieldErrors({
+      firstNameError: "",
+      lastNameError: "",
+      emailError: "",
+      passwordError: "",
+      confirmPasswordError: "",
+    });
+  };
   return (
     <>
       <FieldErrorContext.Provider
         value={{
-          firstNameError,
-          setFirstNameError,
-          lastNameError,
-          setLastNameError,
-          emailError,
-          setEmailError,
-          passwordError,
-          setPasswordError,
-          confirmPasswordError,
-          setConfirmPasswordError,
+          fieldErrors,
+          setFieldErrors,
+          setFieldError,
+          resetFieldErrors,
         }}
       >
         {children}

@@ -7,12 +7,14 @@ const Input: FC<IInput> = ({
   name,
   onChange,
   placeholder,
-  required=false,
+  required = false,
   type,
+  disabled = false,
 }) => {
   return (
     <>
       <input
+        disabled={disabled}
         onChange={onChange}
         id={id}
         name={name}

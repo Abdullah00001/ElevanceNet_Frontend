@@ -1,6 +1,8 @@
 import { createContext } from "react";
-import IFieldError from "../interfaces/fieldErrorContext.interface";
+import { IFieldErrorContextValue } from "../interfaces/fieldErrorContext.interface";
 
-const FieldErrorContext = createContext<IFieldError | undefined>(undefined);
+const FieldErrorContext = createContext<IFieldErrorContextValue | undefined>(
+  undefined
+);
 
 export default FieldErrorContext;

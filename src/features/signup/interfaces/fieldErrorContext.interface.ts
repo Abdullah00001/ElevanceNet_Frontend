@@ -1,13 +1,14 @@
-interface IFieldError {
-  firstNameError?: string;
-  setFirstNameError?: (error: string) => void;
-  lastNameError?: string;
-  setLastNameError?: (error: string) => void;
-  emailError?: string;
-  setEmailError?: (error: string) => void;
-  passwordError?: string;
-  setPasswordError?: (error: string) => void;
-  confirmPasswordError?: string;
-  setConfirmPasswordError?: (error: string) => void;
+export interface IFieldError {
+  firstNameError: string;
+  lastNameError: string;
+  emailError: string;
+  passwordError: string;
+  confirmPasswordError: string;
 }
-export default IFieldError;
+
+export interface IFieldErrorContextValue {
+  fieldErrors: IFieldError;
+  setFieldErrors: React.Dispatch<React.SetStateAction<IFieldError>>;
+  setFieldError: (field: string, errorMessage: string) => void;
+  resetFieldErrors:()=>void;
+}

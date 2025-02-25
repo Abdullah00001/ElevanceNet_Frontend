@@ -29,5 +29,6 @@ export interface IInput {
   placeholder?: string;
   required?: boolean;
   style: string;
+  disabled?:boolean;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
