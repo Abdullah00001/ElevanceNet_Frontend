@@ -8,19 +8,16 @@ import ConfirmPassword from "./ConfirmPassword";
 import useSignupPayload from "../hooks/useSignupPayload";
 import signupInputValidationSchema from "../../../schemas/signup.schema";
 import useFieldError from "../hooks/useFieldError";
-import useSignup from "../hooks/useSignup";
 import { useNavigate } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 
 const SignupForm: FC = () => {
   const { signupPayload } = useSignupPayload();
   const { setFieldError, resetFieldErrors } = useFieldError();
-  const [signupFailedError, setSignupFailedError] = useState<string>("yjtytc");
-  const { isPending, mutate } = useSignup();
+  const [signupFailedError, setSignupFailedError] = useState<string>("");
   const navigate = useNavigate();
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // Form Validation
     resetFieldErrors();
     const fieldValidationResult =
       signupInputValidationSchema.safeParse(signupPayload);
@@ -39,15 +36,6 @@ const SignupForm: FC = () => {
         });
       return;
     }
-    // Form Validation
-    mutate(signupPayload, {
-      onSuccess: (data) => {
-        if (data?.success) {
-          navigate("/auth/verify");
-        }
-      },
-      onError: (error) => setSignupFailedError(error.message),
-    });
   };
   useEffect(() => {
     console.log(signupFailedError);
@@ -86,21 +74,6 @@ const SignupForm: FC = () => {
           </span>
         </h5>
       </form>
-      {/* Error Modal */}
-      {signupFailedError && (
-        <div className="absolute z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
-            <h2 className="text-lg font-bold text-red-600">Signup Failed</h2>
-            <p className="text-gray-700 mt-2">{signupFailedError}</p>
-            <button
-              className="mt-4 bg-[#1D9BF0] text-white py-2 px-4 rounded-lg"
-              onClick={() => setSignupFailedError("")}
-            >
-              OK
-            </button>
-          </div>
-        </div>
-      )}
     </section>
   );
 };
