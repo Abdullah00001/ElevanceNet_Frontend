@@ -9,12 +9,10 @@ import useSignupPayload from "../hooks/useSignupPayload";
 import signupInputValidationSchema from "../../../schemas/signup.schema";
 import useFieldError from "../hooks/useFieldError";
 import { useNavigate } from "react-router-dom";
-import { HashLoader } from "react-spinners";
 
 const SignupForm: FC = () => {
   const { signupPayload } = useSignupPayload();
   const { setFieldError, resetFieldErrors } = useFieldError();
-  const [signupFailedError, setSignupFailedError] = useState<string>("");
   const navigate = useNavigate();
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -37,9 +35,6 @@ const SignupForm: FC = () => {
       return;
     }
   };
-  useEffect(() => {
-    console.log(signupFailedError);
-  }, []);
   return (
     <section className="mt-10 w-full max-w-md px-4 md:px-0 relative">
       <form className="w-full space-y-2" onSubmit={handleSubmit}>
@@ -56,11 +51,17 @@ const SignupForm: FC = () => {
         <div>
           <ConfirmPassword />
         </div>
-        <Button
+        {/* <Button
           style="mt-2 hover:opacity-90 w-full rounded-lg bg-[#1D9BF0] py-3 text-lg font-bold text-white cursor-pointer"
           type="submit"
         >
           {isPending ? <HashLoader size={20} /> : "Signup"}
+        </Button>  */}
+        <Button
+          style="mt-2 hover:opacity-90 w-full rounded-lg bg-[#1D9BF0] py-3 text-lg font-bold text-white cursor-pointer"
+          type="submit"
+        >
+          "Signup"
         </Button>
         <h5 className="text-center text-sm text-gray-600">
           Already have an account?{" "}
