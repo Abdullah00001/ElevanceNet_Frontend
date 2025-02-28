@@ -21,7 +21,7 @@ const Signup: FC = () => {
               <SignupForm />
             </SignupPayloadProvider>
           </FieldErrorProvider>
-          {/* ========================
+          {/* =========================
           --------------FORM-----------
           ============================= */}
           <AuthPageFooter />
