@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { IMetaDataProps } from "../interfaces/meta.interfaces";
+import { IMetaDataProps } from "../interfaces/meta.interface";
 
 const PageTitle = ({ title, description }: IMetaDataProps) => {
   useEffect(() => {

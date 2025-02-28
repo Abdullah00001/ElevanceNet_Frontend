@@ -1,11 +1,32 @@
 import { FC } from "react";
 import PageTitle from "../utils/PageTitle";
+import SignupHeader from "../features/signup/components/SignupHeader";
+import SignupForm from "../features/signup/components/SignupForm";
+import FieldErrorProvider from "../features/signup/providers/FieldErrorProvider";
+import AuthPageFooter from "../components/AuthPageFooter";
+import SignupPayloadProvider from "../features/signup/providers/SignupPayloadProvider";
 
 const Signup: FC = () => {
   return (
     <>
       <PageTitle key={"signup"} title="Signup" description="its signup page" />
-      <div className="text-5xl">Signup</div>
+      <section>
+        <div className="flex flex-col justify-center items-center h-screen">
+          <SignupHeader />
+          {/* ========================
+          --------------FORM-----------
+          ============================= */}
+          <FieldErrorProvider>
+            <SignupPayloadProvider>
+              <SignupForm />
+            </SignupPayloadProvider>
+          </FieldErrorProvider>
+          {/* ========================
+          --------------FORM-----------
+          ============================= */}
+          <AuthPageFooter />
+        </div>
+      </section>
     </>
   );
 };
