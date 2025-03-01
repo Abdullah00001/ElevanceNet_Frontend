@@ -21,7 +21,7 @@ const SignupForm: FC = () => {
   const [serverError, setServerError] = useState<string>("");
   const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { isError, isPending, error, mutate } = useMutation({
+  const { isError, isPending, data, error, mutate } = useMutation({
     mutationFn: signupService,
   });
   const handleSubmit = (e: FormEvent) => {
@@ -44,18 +44,18 @@ const SignupForm: FC = () => {
         });
       return;
     }
-    mutate(signupPayload, {
-      onSuccess: (data) => {
-        if (data?.data.success) {
-          navigate("/auth/verify");
-        }
-      },
-    });
+
+    mutate(signupPayload);
   };
+
+  if (data?.success) {
+    navigate("/auth/verify");
+  }
 
   const closeModal = () => {
     setShowErrorModal(false);
   };
+
   useEffect(() => {
     if (isError) {
       if (error instanceof Error) {
@@ -71,6 +71,7 @@ const SignupForm: FC = () => {
       }
     }
   }, [isError, error]);
+
   return (
     <>
       <section className="mt-10 w-full max-w-md px-4 md:px-0 relative">
