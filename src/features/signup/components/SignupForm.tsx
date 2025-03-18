@@ -100,7 +100,7 @@ const SignupForm: FC = () => {
             <span
               className="text-[#1D9BF0] font-bold md:text-[18px] cursor-pointer"
               onClick={() => {
-                navigate("/");
+                navigate("/auth/login");
               }}
             >
               Login

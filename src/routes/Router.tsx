@@ -5,11 +5,11 @@ import VerifyUser from "../pages/VerifyUser";
 
 const Routes = createBrowserRouter([
   {
-    path: "/signup",
+    path: "/auth/signup",
     element: <Signup />,
   },
   {
-    path: "/",
+    path: "/auth/login",
     element: <Login />,
   },
   {

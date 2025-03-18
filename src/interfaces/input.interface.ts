@@ -1,8 +1,8 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, ClipboardEvent, KeyboardEvent, Ref } from "react";
 
 export interface IInput {
-  id: string;
-  name: string;
+  id?: string;
+  name?: string;
   type:
     | "button"
     | "checkbox"
@@ -28,7 +28,13 @@ export interface IInput {
     | "week";
   placeholder?: string;
   required?: boolean;
-  style: string;
-  disabled?:boolean;
+  style?: string;
+  disabled?: boolean;
+  value?: string;
+  maxLength?: number;
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
+  onPaste?: (e: ClipboardEvent<HTMLInputElement>) => void;
+  onBackspace?: (e: KeyboardEvent<HTMLInputElement>) => void;
+  ref?: Ref<HTMLInputElement>;
 }
