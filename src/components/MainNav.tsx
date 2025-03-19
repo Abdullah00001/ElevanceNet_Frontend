@@ -14,8 +14,8 @@ const MainNav: FC = () => {
   };
 
   return (
-    <section className="shadow-md ">
-      <div className="max-w-[1144px] w-full mx-auto px-4">
+    <section>
+      <div className="max-w-[1144px] w-full mx-auto px-4 border-b">
         <nav className="flex justify-between items-center py-4">
           {/* Logo */}
           <div>
@@ -31,10 +31,10 @@ const MainNav: FC = () => {
               {!searchClick ? (
                 <button
                   onClick={handleShowSearchBar}
-                  className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-full hover:bg-gray-100 transition"
+                  className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-full cursor-text transition"
                 >
-                  <FaSearch className="text-gray-600" />
-                  <span className="text-gray-600">Search</span>
+                  <FaSearch />
+                  <span>Search</span>
                 </button>
               ) : (
                 <div className="relative flex items-center">
@@ -47,7 +47,7 @@ const MainNav: FC = () => {
                   />
                   <IoCloseSharp
                     onClick={handleShowSearchBar}
-                    className="absolute right-3 text-gray-500 hover:text-gray-800 cursor-pointer text-xl"
+                    className="absolute right-3  hover:text-gray-800 cursor-pointer text-xl"
                   />
                 </div>
               )}
